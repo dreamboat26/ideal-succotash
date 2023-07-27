@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Results</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h1>Search Results</h1>
+  <div id="searchResults"></div>
+
+  <script>
+    // Function to display search results
+    function displaySearchResults(results) {
+      const searchResultsContainer = document.getElementById('searchResults');
+
+      if (results && results.length > 0) {
+        results.forEach(result => {
+          const resultElement = document.createElement('div');
+          const titleElement = document.createElement('a');
+          const snippetElement = document.createElement('p');
+
+          titleElement.textContent = result.htmlTitle;
+          titleElement.href = result.link;
+          titleElement.target = '_blank';
+          snippetElement.textContent = result.htmlSnippet;
+
+          resultElement.appendChild(titleElement);
+          resultElement.appendChild(snippetElement);
+          searchResultsContainer.appendChild(resultElement);
+        });
+      } else {
+        searchResultsContainer.innerHTML = '<p>No results found.</p>';
+      }
+    }
+
+    // Get search results from the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchResults = JSON.parse(urlParams.get('results'));
+
+    // Display search results
+    displaySearchResults(searchResults);
+  </script>
+</body>
+</html>
